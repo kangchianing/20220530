@@ -18,4 +18,16 @@
         android:text="射擊遊戲(作者:康家寧)"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/imgstart"
+        android:layout_width="132dp"
+        android:layout_height="68dp"
+        android:layout_marginBottom="10dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:srcCompat="@drawable/start" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
