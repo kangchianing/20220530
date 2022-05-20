@@ -3,6 +3,7 @@ package com.example.myapplication
 import android.graphics.Canvas
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.MotionEvent
 import android.view.View
 import android.widget.ImageView
 import com.bumptech.glide.annotation.GlideModule
@@ -13,7 +14,7 @@ import kotlinx.coroutines.*
 @GlideModule
 public final class MyAppGlideModule : AppGlideModule()
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(), View.OnTouchListener {
 
     lateinit var binding: ActivityMainBinding
     var flag:Boolean = false
@@ -34,6 +35,8 @@ class MainActivity : AppCompatActivity() {
         lateinit var job: Job
         //binding.txv.text = secondsLeft.toString()
 
+        binding.imgfly.setOnTouchListener(this)
+
         binding.imgstart.setOnClickListener(object: View.OnClickListener{
             override fun onClick(p0: View?) {
                 if(flag){
@@ -46,6 +49,10 @@ class MainActivity : AppCompatActivity() {
                     job = GlobalScope.launch(Dispatchers.Main) {
                         while(flag){
                             delay(25)
+                            binding.imgfly.setImageResource(R.drawable.fly2)
+                            delay(25)
+                            binding.imgfly.setImageResource(R.drawable.fly1)
+
                             val canvas: Canvas = binding.mysv.holder.lockCanvas()
                             binding.mysv.drawSomething(canvas)
                             binding.mysv.holder.unlockCanvasAndPost(canvas)
@@ -54,5 +61,14 @@ class MainActivity : AppCompatActivity() {
                 }
             }
         })
+    }
+
+    override fun onTouch(v: View?, event: MotionEvent?): Boolean {
+
+        if (event?.action == MotionEvent.ACTION_MOVE){
+            v?.x = (115 - v!!.width/2).toFloat()
+            v?.y = event.rawY- v!!.height/2
+        }
+        return true
     }
 }
